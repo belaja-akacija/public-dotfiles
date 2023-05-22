@@ -1,0 +1,69 @@
+ "BEHAVIOUR
+set nocompatible
+set wrap
+set exrc
+set secure
+set linebreak
+set mouse=a
+set expandtab
+set tabstop=4
+set shiftwidth=2
+set ignorecase
+set infercase
+set smartcase
+set splitbelow splitright
+set hlsearch
+filetype plugin on
+filetype indent on
+syntax on
+set numberwidth=1
+set cpoptions+=n
+set nu
+noremap Q <Nop>
+set showbreak=>\ \ \
+autocmd BufWritePre * :%s/\v\s+$//e
+" MAPPINGS
+nnoremap ; :
+nnoremap : ;
+let mapleader = "\<Space>"
+" let maplocalleader = "\."*/
+nnoremap <Leader>w :w<CR>
+nmap <Leader><Leader> V
+"nnoremap <Leader>vs :vsp<CR>
+nnoremap <Leader>hs :sp<CR>
+nmap <Leader>' <C-W>W
+nnoremap <Leader>b :buffer<Space>
+nnoremap <Leader>rv :so ~/.config/nvim/init.vim <CR>
+nnoremap <Leader>s :let @/ = ""<CR>
+nnoremap <C-e> :vsp $MYVIMRC <CR><C-w>R
+nnoremap <C-s> :%s/\v(
+nmap <Leader>cw <C-w>c
+nmap <Leader>sw <C-w>R
+nmap <C-j> <C-w>5-
+nmap <C-k> <C-w>5+
+nmap <C-h> <C-w>5<
+nmap <C-l> <C-w>5>
+map <Leader>m <C-w>_<C-w><Bar>
+map <Leader>t <C-w>=
+map <Leader>vw <C-w>t<C-w>H
+map <Leader>hw <C-w>t<C-w>K
+nmap <Leader><Leader>l  <C-W>l
+nmap <Leader><Leader>h <C-W>h
+nmap <Leader><Leader>k <C-W>k
+nmap <Leader><Leader>j <C-W>j
+vnoremap <C-y> "+y
+nnoremap <Leader>vt :vnew term://zsh<CR>
+nnoremap <Leader>ht :new term://zsh<CR>
+tnoremap <Esc><Esc> <C-\><C-n>
+" COLORS
+set termguicolors
+colorscheme evening
+"highlight LineNr guifg=#EDD2E0
+set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
+let &t_EI = "\<esc>[ q"
+let &t_SI = "\<esc>[5 q"
+let &t_SR = "\<esc>[3 q"
+nnoremap <Leader>s :let @/ = ""<CR>
+nnoremap <Leader>j :bnext<CR>
+nnoremap <Leader>k :bprevious<CR>
+nnoremap <C-n> :set relativenumber!<CR>
