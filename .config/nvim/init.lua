@@ -98,8 +98,14 @@ keymap('n', '<Leader>rv', ':so ~/.config/nvim/init.lua <CR>', { noremap = true, 
 keymap('n', '<Leader>g', ':vsp<CR>:GuileTerminal<CR>a', { noremap = true, silent = true })
 keymap('n', '<Leader>gl', ':vsp<CR>:GuileLyTerminal<CR>a', { noremap = true, silent = true })
 keymap('n', '<F10>', ':exe "normal cl\\<C-v>u2713"<ESC>', { noremap = true, silent = true })
+keymap('x', '<C-c>', '"+y', { noremap = false, silent = false })
 
-
+-- telescope shit
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 -- MUST BE IN FILE OTHERWISE WON'T WORK
 vim.cmd[[let g:rainbow_active = 0

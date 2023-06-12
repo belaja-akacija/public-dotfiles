@@ -9,7 +9,7 @@ vim.cmd([[
   augroup end
 ]])
 
-function lilyRender ()
+function LilyRender ()
 local handle = io.popen("exec ~/Documents/scripts/shell/not-running.sh")
 local result = handle:read("*line")
 handle:close()
@@ -34,7 +34,7 @@ vim.api.nvim_create_autocmd(
 {pattern = "lilypond",
 --command = [[nnoremap <buffer> <Leader>ll :!lilypond -dno-point-and-click -dembed-source-code % && zathura %:r.pdf & <Enter>]], 
 callback = function()
-  vim.keymap.set('n', '<Leader>ll', function() lilyRender() end, {buffer = true})
+  vim.keymap.set('n', '<Leader>ll', function() LilyRender() end, {buffer = true})
 end,
 -- callback = vim.keymap.set('n', '<buffer> <Leader>ll',lilyRender()),
 group = lyBindings}
@@ -74,3 +74,41 @@ vim.cmd[[
 command GuileTerminal terminal guile
 command GuileLyTerminal terminal lilypond scheme-sandbox
 ]]
+
+-- setup lsp-zero
+local lsp = require('lsp-zero').preset({})
+
+lsp.on_attach(function(client, bufnr)
+  lsp.default_keymaps({buffer = bufnr})
+end)
+
+-- (Optional) Configure lua language server for neovim
+require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+
+lsp.setup()
+
+vim.lsp.set_log_level("debug")
+require('lspconfig.configs').alive_lsp = {
+  default_config = {
+    name = 'alive_lsp',
+    --cmd = {"sbcl", "--eval '(require \"asdf\")' --eval '(asdf:load-system \"alive-lsp\")' --eval '(alive/server:start)'"},
+    cmd = {'/bin/sh', '/home/belajaakacija/Documents/scripts/alive-lsp.sh'},
+    filetypes = {'lisp'},
+    root_dir = require('lspconfig.util').root_pattern({'init.txt'})
+  }
+}
+
+require('lspconfig').alive_lsp.setup({})
+
+-- setup nvim-cmp-vlime
+--require('cmp').setup.filetype({'lisp'}, {
+    --sources = {
+        --{name = 'vlime'}
+    --}
+--})
+
+require('cmp').setup({
+  experimental = {ghost_text = true,},
+})
+
+
