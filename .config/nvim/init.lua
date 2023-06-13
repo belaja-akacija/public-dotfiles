@@ -15,6 +15,7 @@
 ------------------------------------------------------------
 -- TODO:
 -- figure out why mappings in a separate file doesn't work
+-- refactor 'refresh vim rc" to include all of the lua files. write a function for this.
 
 ------------------------------------------------------------
 
