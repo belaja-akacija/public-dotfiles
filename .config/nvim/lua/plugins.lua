@@ -1,6 +1,9 @@
---[[
-*plugins*
-]]--
+------------------------------------------------------------
+
+-- PLUGINS
+
+------------------------------------------------------------
+
 return require('packer').startup(function(use)
   use 'vim-airline/vim-airline'
   use 'wbthomason/packer.nvim'
@@ -16,11 +19,8 @@ return require('packer').startup(function(use)
   use 'junegunn/limelight.vim'
   use 'justinmk/vim-sneak'
   use 'markonm/traces.vim'
-  --use 'preservim/nerdtree'
   use 'psliwka/vim-smoothie'
   use 'scrooloose/nerdcommenter'
-  ----use('styled-components/vim-styled-components', {branch = 'main'})
-  --use 'tpope/vim-unimpaired'
   use 'tpope/vim-repeat'
   use 'tpope/vim-surround'
   use 'HiPhish/guile.vim'
@@ -32,21 +32,20 @@ return require('packer').startup(function(use)
     'vlime/vlime',
     rtp = 'vim/'
   })
--- autocomplete 
-use {
-  'VonHeikemen/lsp-zero.nvim',
-  branch = 'v2.x',
-  requires = {
-    -- LSP Support
-    {'neovim/nvim-lspconfig'},             -- Required
-    {                                      -- Optional
+  -- autocomplete
+  use {
+    'VonHeikemen/lsp-zero.nvim',
+    branch = 'v2.x',
+    requires = {
+      -- LSP Support
+      {'neovim/nvim-lspconfig'},             -- Required
+      {                                      -- Optional
       'williamboman/mason.nvim',
       run = function()
         pcall(vim.cmd, 'MasonUpdate')
       end,
     },
     {'williamboman/mason-lspconfig.nvim'}, -- Optional
-
     -- Autocompletion
     {'hrsh7th/nvim-cmp'},     -- Required
     {'hrsh7th/cmp-nvim-lsp'}, -- Required
@@ -60,7 +59,9 @@ use {
 -- telescope
 use {
   'nvim-telescope/telescope.nvim', tag = '0.1.1',
--- or                            , branch = '0.1.x',
+  -- or                            , branch = '0.1.x',
   requires = { {'nvim-lua/plenary.nvim'} }
 }
+-- gruvbox colorscheme
+use {'morhetz/gruvbox', config = function() vim.cmd.colorscheme("gruvbox") end }
 end)

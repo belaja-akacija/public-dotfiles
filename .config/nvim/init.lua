@@ -1,89 +1,180 @@
 --[[
-Basic Settings
-]]--
+ _          _        _             _              _  _       _
+| |__   ___| | __ _ (_) __ _  __ _| | ____ _  ___(_)(_) __ _( )___
+| '_ \ / _ \ |/ _` || |/ _` |/ _` | |/ / _` |/ __| || |/ _` |// __|
+| |_) |  __/ | (_| || | (_| | (_| |   < (_| | (__| || | (_| | \__ \
+|_.__/ \___|_|\__,_|/ |\__,_|\__,_|_|\_\__,_|\___|_|/ |\__,_| |___/
+                  |__/                            |__/
+                   _       _ _     _
+                  (_)_ __ (_) |_  | |_   _  __ _
+                  | | '_ \| | __| | | | | |/ _` |
+                  | | | | | | |_ _| | |_| | (_| |
+                  |_|_| |_|_|\__(_)_|\__,_|\__,_|
+--]]
 
---require ('necessities')
--- to go to the 'required' files, use <Leader>] on the file name
+------------------------------------------------------------
+-- TODO:
+-- figure out why mappings in a separate file doesn't work
+
+------------------------------------------------------------
+
+--[[
+to go to the 'required' files, use <Leader>] on the file name
+--]]
 require ('plugins')
 require ('functions')
 require ('aesthetics')
+require ('options')
 
-local set = vim.opt
 local keymap = vim.api.nvim_set_keymap
-set.wrap = true
-set.exrc = true
-set.secure = true
-set.linebreak = true
-set.mouse = a
-set.expandtab = true
-set.tabstop = 4
-set.shiftwidth = 2
-set.ignorecase = true
-set.infercase = true
-set.smartcase = true
-set.splitbelow = true
-set.splitright = true
-set.hlsearch = true
-set.tags='./tags,tags,./doc/tags'
-set.numberwidth=1
-vim.cmd[[set cpoptions+=n]]
-set.nu=true
-set.timeoutlen=300
-set.ttimeoutlen=0
-vim.cmd[[set nrformats=]]
 
---[[
-Mappings
-]]--
+------------------------------------------------------------
 
-keymap('n', 'Q', '<Nop>', { noremap = true, silent = true })
-keymap('n', ';', ':', { noremap = true, silent = false })
-keymap('n', ':', ';', { noremap = true, silent = false })
+-- MAPPINGS
+
+------------------------------------------------------------
+
+------------------------------------------------------------
+
+-- Leader settings
+
+------------------------------------------------------------
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ',,'
-keymap('n', '<C-e>', ':vsp ~/.config/nvim/init.lua <CR><C-w>R', { noremap = true, silent = true })
+
+------------------------------------------------------------
+
+-- Nop Q
+
+------------------------------------------------------------
+keymap('n', 'Q', '<Nop>', { noremap = true, silent = true })
+
+------------------------------------------------------------
+
+-- Remap ; to :
+
+------------------------------------------------------------
+keymap('n', ';', ':', { noremap = true, silent = false })
+keymap('n', ':', ';', { noremap = true, silent = false })
+
+------------------------------------------------------------
+
+-- Save file
+
+------------------------------------------------------------
 keymap('n', '<Leader>w', ':w<CR>', { noremap = true, silent = false })
-keymap('n', '<C-s>', ':%s/\\v()<LEFT>', { noremap = true, silent = false })
-keymap('n', '<Leader>e', ':exe "norm "<LEFT>', { noremap = true, silent = false })
-keymap('n', '<Leader>vt', ':vnew term://zsh<CR>a', { noremap = true, silent = true })
-keymap('n', '<Leader>ht', ':new term://zsh<CR>a', { noremap = true, silent = true })
-keymap('t', '<Esc><Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
+
+------------------------------------------------------------
+
+-- Vim configuration
+
+------------------------------------------------------------
+keymap('n', '<C-e>', ':~/.config/nvim/init.lua', { noremap = true, silent = true })
+keymap('n', '<Leader>rv', ':so ~/.config/nvim/init.lua <CR>', { noremap = true, silent = false })
+
+------------------------------------------------------------
+
+-- Splits
+
+------------------------------------------------------------
 keymap('n', '<Leader>vs', ':vsp<CR>', { noremap = true, silent = false })
 keymap('n', '<Leader>hs', ':sp<CR>', { noremap = true, silent = false })
+keymap('n', '<Leader>vt', ':vnew term://zsh<CR>a', { noremap = true, silent = true })
+keymap('n', '<Leader>ht', ':new term://zsh<CR>a', { noremap = true, silent = true })
+keymap('n', '<Leader>g', ':vsp<CR>:GuileTerminal<CR>a', { noremap = true, silent = true })
+keymap('n', '<Leader>gl', ':vsp<CR>:GuileLyTerminal<CR>a', { noremap = true, silent = true }) -- TODO enable this only in lilypond files
+keymap('t', '<Esc><Esc>', '<C-\\><C-n>', { noremap = true, silent = true }) -- Escape out of terminal
+-- resizing splits
 keymap('n', '<C-j>', '<C-w>5-', { noremap = false, silent = true })
 keymap('n', '<C-k>', '<C-w>5+', { noremap = false, silent = true })
 keymap('n', '<C-h>', '<C-w>5<', { noremap = false, silent = true })
 keymap('n', '<C-l>', '<C-w>5>', { noremap = false, silent = true })
+-- move between splits
 keymap('n', '<Leader><Leader>l', '<C-w>l', { noremap = false, silent = true })
 keymap('n', '<Leader><Leader>h', '<C-w>h', { noremap = false, silent = true })
 keymap('n', '<Leader><Leader>k', '<C-w>k', { noremap = false, silent = true })
 keymap('n', '<Leader><Leader>j', '<C-w>j', { noremap = false, silent = true })
+-- close/swap splits
 keymap('n', '<Leader>cw', '<C-w>c', { noremap = false, silent = false })
 keymap('n', '<Leader>sw', '<C-w>R', { noremap = false, silent = false })
-keymap('', '<Leader>m', '<C-w>_<C-w><Bar>', { noremap = false, silent = true })
-keymap('', '<Leader>t', '<C-w>=', { noremap = false, silent = true })
+-- swap between horiz/vert layout
 keymap('', '<Leader>vw', '<C-w>t<C-w>H', { noremap = false, silent = true })
 keymap('', '<Leader>hw', '<C-w>t<C-w>K', { noremap = false, silent = true })
-keymap('n', '<Leader>b', ':buffer<Space>', { noremap = true, silent = false })
-keymap('n', '<Leader>j', ':bnext<CR>', { noremap = true, silent = false })
-keymap('n', '<Leader>k', ':bprev<CR>', { noremap = true, silent = false })
-keymap('', '<Leader>]', '<C-]>', { noremap = true, silent = true })
-keymap('', '<Leader>[', '<C-t>', { noremap = true, silent = true })
-keymap('i', '<S-Tab>', '<C-n>', { noremap = false, silent = true })
-keymap('n', '<Leader>o', '<C-o>', { noremap = true, silent = true })
-keymap('n', '<Leader>i', '<C-i>', { noremap = true, silent = true })
-keymap('', ':', '<Plug>SneakNext', { noremap = false, silent = false })
-keymap('', ':', '<Plug>VSneakNext', { noremap = false, silent = false })
-keymap('', ':', '<Plug>SneakNext', { noremap = false, silent = false })
-keymap('n', '<Leader>s', ':let @/ = ""<CR>', { noremap = true, silent = true })
-keymap('n', '<C-n>', ':set relativenumber!<CR>', { noremap = true, silent = true })
+-- maximize/equalize splits
+keymap('', '<Leader>m', '<C-w>_<C-w><Bar>', { noremap = false, silent = true })
+keymap('', '<Leader>t', '<C-w>=', { noremap = false, silent = true })
+
+------------------------------------------------------------
+
+-- Arrow key functions
+
+------------------------------------------------------------
 keymap('', '<UP>', ':windo diffthis<CR>', { noremap = true, silent = false })
 keymap('', '<DOWN>', ':diffoff<CR>', { noremap = true, silent = false })
 keymap('', '<LEFT>', '<Nop>', { noremap = true, silent = false })
 keymap('', '<RIGHT>', '<Nop>', { noremap = true, silent = false })
+
+------------------------------------------------------------
+
+-- Cursor position jumps
+
+------------------------------------------------------------
+keymap('n', '<Leader>o', '<C-o>', { noremap = true, silent = true })
+keymap('n', '<Leader>i', '<C-i>', { noremap = true, silent = true })
+
+------------------------------------------------------------
+
+-- Jump back and forth tags
+
+------------------------------------------------------------
+keymap('', '<Leader>]', '<C-]>', { noremap = true, silent = true })
+keymap('', '<Leader>[', '<C-t>', { noremap = true, silent = true })
+
+------------------------------------------------------------
+
+-- Buffers
+
+------------------------------------------------------------
+keymap('n', '<Leader>j', ':bnext<CR>', { noremap = true, silent = false })
+keymap('n', '<Leader>k', ':bprev<CR>', { noremap = true, silent = false })
+
+------------------------------------------------------------
+
+-- Toggles
+
+------------------------------------------------------------
+keymap('n', '<C-n>', ':set relativenumber!<CR>', { noremap = true, silent = true })
+
+------------------------------------------------------------
+
+-- Misc useful bindings
+
+------------------------------------------------------------
+-- search and replace
+keymap('n', '<C-s>', ':%s/\\v()<LEFT>', { noremap = true, silent = false })
+-- execute a norm command
+keymap('n', '<Leader>e', ':exe "norm "<LEFT>', { noremap = true, silent = false })
+-- replace with check mark under cursor
+keymap('n', '<F10>', ':exe "normal cl\\<C-v>u2713"<ESC>', { noremap = true, silent = true })
+-- remove search highlighting
+keymap('n', '<Leader>s', ':let @/ = ""<CR>', { noremap = true, silent = true })
+-- copy to system clipboard in visual mode
+keymap('x', '<C-c>', '"+y', { noremap = false, silent = false })
+
+------------------------------------------------------------
+
+-- Plugin specific bindings
+
+------------------------------------------------------------
+-- sneak
+keymap('', ':', '<Plug>SneakNext', { noremap = false, silent = false })
+keymap('', ':', '<Plug>VSneakNext', { noremap = false, silent = false })
+keymap('', ':', '<Plug>SneakNext', { noremap = false, silent = false })
+-- nerdcommenter
 keymap('v', '//', '<Plug>NERDCommenterToggle<CR>', { noremap = false, silent = true })
 keymap('n', '//', '<Plug>NERDCommenterToggle<CR>', { noremap = false, silent = true })
-keymap('n', '<Leader>nt', ':NERDTreeToggle<CR>', { noremap = true, silent = true })
+-- surround.vim
 keymap('n', 'dl', '<Plug>Dsurround', { noremap = false, silent = false })
 keymap('n', 'cs', '<Plug>Csurround', { noremap = false, silent = false })
 keymap('n', 'cL', '<Plug>CSurround', { noremap = false, silent = false })
@@ -94,23 +185,9 @@ keymap('n', 'yLl', '<Plug>YSsurround', { noremap = false, silent = false })
 keymap('n', 'yLL', '<Plug>YSSurround', { noremap = false, silent = false })
 keymap('x', 'L', '<Plug>VSurround', { noremap = false, silent = false })
 keymap('x', 'gL', '<Plug>VgSurround', { noremap = false, silent = false })
-keymap('n', '<Leader>rv', ':so ~/.config/nvim/init.lua <CR>', { noremap = true, silent = false })
-keymap('n', '<Leader>g', ':vsp<CR>:GuileTerminal<CR>a', { noremap = true, silent = true })
-keymap('n', '<Leader>gl', ':vsp<CR>:GuileLyTerminal<CR>a', { noremap = true, silent = true })
-keymap('n', '<F10>', ':exe "normal cl\\<C-v>u2713"<ESC>', { noremap = true, silent = true })
-keymap('x', '<C-c>', '"+y', { noremap = false, silent = false })
-
--- telescope shit
+-- telescope
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
-
--- MUST BE IN FILE OTHERWISE WON'T WORK
-vim.cmd[[let g:rainbow_active = 0
-let g:slime_target = "neovim"]]
-
-vim.cmd[[
-let g:goyo_width=100
-]]

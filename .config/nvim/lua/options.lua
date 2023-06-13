@@ -1,0 +1,58 @@
+------------------------------------------------------------
+
+-- OPTIONS
+
+------------------------------------------------------------
+
+local set = vim.opt
+set.wrap = true
+set.exrc = true
+set.secure = true
+set.linebreak = true
+set.mouse = "a"
+set.expandtab = true
+set.tabstop = 4
+set.shiftwidth = 2
+set.ignorecase = true
+set.infercase = true
+set.smartcase = true
+set.splitbelow = true
+set.splitright = true
+set.hlsearch = true
+set.tags='./tags,tags,./doc/tags'
+set.numberwidth=1
+vim.cmd[[set cpoptions+=n]]
+set.nu=true
+set.timeoutlen=300
+set.ttimeoutlen=0
+vim.cmd[[set nrformats=]]
+vim.cmd[[set autoread]]
+vim.cmd[[au FocusGained,BufEnter * :checktime]]
+
+-- MUST BE IN FILE OTHERWISE WON'T WORK
+vim.cmd[[let g:rainbow_active = 0
+let g:slime_target = "neovim"]]
+
+vim.cmd[[
+let g:goyo_width=100
+]]
+
+-- setup true colors in nvim (I know this is messy)
+-- TODO just clean all this shit up!!
+vim.cmd[[
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (empty($TMUX))
+  if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+    endif
+    "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+    "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+    " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+    if (has("termguicolors"))
+      set termguicolors
+      endif
+      endif
+      ]]
