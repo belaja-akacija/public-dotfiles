@@ -6,6 +6,7 @@
 
 return require('packer').startup(function(use)
   use 'vim-airline/vim-airline'
+  use 'vim-airline/vim-airline-themes'
   use 'wbthomason/packer.nvim'
   use 'Galicarnax/vim-regex-syntax'
   use 'ap/vim-css-color'
@@ -23,10 +24,11 @@ return require('packer').startup(function(use)
   use 'scrooloose/nerdcommenter'
   use 'tpope/vim-repeat'
   use 'tpope/vim-surround'
+  use 'tpope/vim-fugitive'
+  use 'tpope/vim-sexp-mappings-for-regular-people'
   use 'HiPhish/guile.vim'
   use 'luochen1990/rainbow'
   use 'guns/vim-sexp'
-  use 'tpope/vim-sexp-mappings-for-regular-people'
   use 'jpalardy/vim-slime'
   use ({
     'vlime/vlime',

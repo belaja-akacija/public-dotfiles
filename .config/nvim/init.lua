@@ -78,13 +78,17 @@ keymap('n', '<Leader>rv', ':so ~/.config/nvim/init.lua <CR>', { noremap = true, 
 -- Splits
 
 ------------------------------------------------------------
+-- create splits
 keymap('n', '<Leader>vs', ':vsp<CR>', { noremap = true, silent = false })
 keymap('n', '<Leader>hs', ':sp<CR>', { noremap = true, silent = false })
+-- create terminal splits
 keymap('n', '<Leader>vt', ':vnew term://zsh<CR>a', { noremap = true, silent = true })
 keymap('n', '<Leader>ht', ':new term://zsh<CR>a', { noremap = true, silent = true })
+-- create guile scheme terminal splits
 keymap('n', '<Leader>g', ':vsp<CR>:GuileTerminal<CR>a', { noremap = true, silent = true })
 keymap('n', '<Leader>gl', ':vsp<CR>:GuileLyTerminal<CR>a', { noremap = true, silent = true }) -- TODO enable this only in lilypond files
-keymap('t', '<Esc><Esc>', '<C-\\><C-n>', { noremap = true, silent = true }) -- Escape out of terminal
+-- Escape out of terminal
+keymap('t', '<Esc><Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
 -- resizing splits
 keymap('n', '<C-j>', '<C-w>5-', { noremap = false, silent = true })
 keymap('n', '<C-k>', '<C-w>5+', { noremap = false, silent = true })
@@ -110,6 +114,7 @@ keymap('', '<Leader>t', '<C-w>=', { noremap = false, silent = true })
 -- Arrow key functions
 
 ------------------------------------------------------------
+-- diff mode
 keymap('', '<UP>', ':windo diffthis<CR>', { noremap = true, silent = false })
 keymap('', '<DOWN>', ':diffoff<CR>', { noremap = true, silent = false })
 keymap('', '<LEFT>', '<Nop>', { noremap = true, silent = false })
