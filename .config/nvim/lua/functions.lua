@@ -68,6 +68,40 @@ group = lyBindings}
 )
 
 
+------------------------------------------------------------
+
+-- Toggle bools in file
+
+------------------------------------------------------------
+
+-- TODO figure out how to make file (language) specific
+
+local function toggleBool()
+ local under_cursor = vim.fn.expand("<cword>");
+ local toggle = "";
+ if (under_cursor == "true") then
+   toggle = "false";
+   vim.cmd("normal! diwi" .. toggle);
+ elseif (under_cursor == "false") then
+   toggle = "true";
+   vim.cmd("normal! diwi" .. toggle);
+   -- for lisp style
+ elseif (under_cursor == "t") then
+   toggle = "nil"
+   vim.cmd("normal! diwi" .. toggle);
+ elseif (under_cursor == "nil") then
+   toggle = "t"
+   vim.cmd("normal! diwi" .. toggle);
+ else
+   print("nothing")
+ end
+end
+
+vim.keymap.set('n', '<F9>', function ()
+ toggleBool()
+end,
+{buffer = true})
+
 
 ------------------------------------------------------------
 
