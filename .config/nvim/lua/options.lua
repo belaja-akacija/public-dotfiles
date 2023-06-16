@@ -34,7 +34,7 @@ vim.cmd[[let g:rainbow_active = 0
 let g:slime_target = "neovim"]]
 
 vim.cmd[[
-let g:goyo_width=100
+let g:goyo_width=110
 ]]
 
 -- setup true colors in nvim (I know this is messy)

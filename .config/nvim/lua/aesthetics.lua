@@ -22,7 +22,7 @@ highlight Sneak guifg=#444444 guibg=#5fd7d7
 ]]
 
 -- Set airline theme
-vim.cmd[[let g:airline_theme=base16_chalk]]
+vim.cmd[[let g:airline_theme='base16_chalk']]
 
 --vim.cmd[[colorscheme lucius]]
 --vim.cmd[[LuciusBlackHighContrast]]
