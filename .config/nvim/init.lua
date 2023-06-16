@@ -70,7 +70,7 @@ keymap('n', '<Leader>w', ':w<CR>', { noremap = true, silent = false })
 -- Vim configuration
 
 ------------------------------------------------------------
-keymap('n', '<C-e>', ':~/.config/nvim/init.lua', { noremap = true, silent = true })
+keymap('n', '<C-e>', ':e ~/.config/nvim/init.lua <CR>', { noremap = true, silent = true })
 keymap('n', '<Leader>rv', ':so ~/.config/nvim/init.lua <CR>', { noremap = true, silent = false })
 
 ------------------------------------------------------------
