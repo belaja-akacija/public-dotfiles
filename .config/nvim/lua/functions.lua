@@ -36,6 +36,12 @@ autocmd BufWritePost plugins.lua source <afile> | PackerCompile
 augroup end
 ]])
 
+------------------------------------------------------------
+
+-- Render a lilypond file and open it
+
+------------------------------------------------------------
+
 local function lilyRender ()
   local handle = io.popen("exec ~/Documents/scripts/shell/not-running.sh")
   local result = handle:read("*line")
@@ -51,18 +57,13 @@ local function lilyRender ()
 end
 
 
-------------------------------------------------------------
-
--- Render a lilypond file and open it
-
-------------------------------------------------------------
 
 local lyBindings = vim.api.nvim_create_augroup("lybindings", {clear = true})
 vim.api.nvim_create_autocmd(
 {"Filetype"},
 {pattern = "lilypond",
 callback = function()
-  vim.keymap.set('n', '<Leader>ll', function() lilyRender() end, {buffer = true})
+  vim.keymap.set('n', '<Leader>ll', function() lilyRender() end, {buffer = true}) -- why does leader key work here, but I had to specify it for toggleBool?
 end,
 group = lyBindings}
 )
@@ -77,31 +78,32 @@ group = lyBindings}
 -- TODO figure out how to make file (language) specific
 
 local function toggleBool()
- local under_cursor = vim.fn.expand("<cword>");
- local toggle = "";
- if (under_cursor == "true") then
-   toggle = "false";
-   vim.cmd("normal! diwi" .. toggle);
- elseif (under_cursor == "false") then
-   toggle = "true";
-   vim.cmd("normal! diwi" .. toggle);
-   -- for lisp style
- elseif (under_cursor == "t") then
-   toggle = "nil"
-   vim.cmd("normal! diwi" .. toggle);
- elseif (under_cursor == "nil") then
-   toggle = "t"
-   vim.cmd("normal! diwi" .. toggle);
- else
-   print("nothing")
- end
+  local under_cursor = vim.fn.expand("<cword>");
+  local toggle;
+  if (under_cursor == "true") then
+    toggle = "false";
+    vim.cmd("normal! ciw" .. toggle);
+    vim.cmd("normal! \"9yiw"); -- yank into "9, so highlight.on_yank works
+  elseif (under_cursor == "false") then
+    toggle = "true";
+    vim.cmd("normal! ciw" .. toggle);
+    vim.cmd("normal! \"9yiw");
+    -- for lisp style
+  elseif (under_cursor == "t") then
+    toggle = "nil"
+    vim.cmd("normal! ciw" .. toggle);
+    vim.cmd("normal! \"9yiw");
+  elseif (under_cursor == "nil") then
+    toggle = "t"
+    vim.cmd("normal! ciw" .. toggle);
+    vim.cmd("normal! \"9yiw");
+  else
+    print("Nothing to toggle.");
+  end
 end
 
-vim.keymap.set('n', '<F9>', function ()
- toggleBool()
-end,
-{buffer = true})
-
+vim.g.mapleader = ' ' -- maybe require init.vim so I don't have to write this twice?
+vim.keymap.set('n', '<Leader>tb', function() toggleBool() end, {buffer = true})
 
 ------------------------------------------------------------
 
@@ -149,11 +151,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 vim.api.nvim_create_autocmd("BufEnter", {command = [[set formatoptions-=cro]]})
 
-vim.cmd[[
-command GuileTerminal terminal guile
-command GuileLyTerminal terminal lilypond scheme-sandbox
-]]
-
 ------------------------------------------------------------
 
 -- Setup lsp-zero
@@ -175,4 +172,12 @@ lsp.setup()
 require('cmp').setup({
   experimental = {ghost_text = true,},
 })
+
+------------------------------------------------------------
+
+-- guile terminal stuff. Where should this go?
+vim.cmd[[
+command GuileTerminal terminal guile
+command GuileLyTerminal terminal lilypond scheme-sandbox
+]]
 
