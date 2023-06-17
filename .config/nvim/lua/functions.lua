@@ -76,34 +76,51 @@ group = lyBindings}
 ------------------------------------------------------------
 
 -- TODO figure out how to make file (language) specific
+-- Maybe make a table that that has a bunch of languages and their associated syntax for true and false?
 
 local function toggleBool()
+
+  local file_type = vim.filetype.match({filename = vim.fn.expand("%")})
   local under_cursor = vim.fn.expand("<cword>");
   local toggle;
-  if (under_cursor == "true") then
-    toggle = "false";
-    vim.cmd("normal! ciw" .. toggle);
-    vim.cmd("normal! \"9yiw"); -- yank into "9, so highlight.on_yank works
-  elseif (under_cursor == "false") then
-    toggle = "true";
-    vim.cmd("normal! ciw" .. toggle);
-    vim.cmd("normal! \"9yiw");
-    -- for lisp style
-  elseif (under_cursor == "t") then
-    toggle = "nil"
-    vim.cmd("normal! ciw" .. toggle);
-    vim.cmd("normal! \"9yiw");
-  elseif (under_cursor == "nil") then
-    toggle = "t"
-    vim.cmd("normal! ciw" .. toggle);
-    vim.cmd("normal! \"9yiw");
+  local replace_under_cursor = "normal! ciw";
+  local highlight_under_cursor = "normal! \"9yiw"; -- yank into "9, so highlight.on_yank works
+
+  if (file_type == "lisp") then
+    if (under_cursor == "t") then
+      toggle = "nil";
+    elseif (under_cursor == "nil") then
+      toggle = "t";
+    else
+      print("Nothing to toggle.");
+    end
+  elseif (file_type ~= "lisp") then
+    if (under_cursor == "true") then
+      toggle = "false";
+    elseif (under_cursor == "false") then
+      toggle = "true";
+    end
   else
     print("Nothing to toggle.");
   end
+
+  if (toggle ~= nil) then
+    vim.cmd(replace_under_cursor .. toggle);
+    vim.cmd(highlight_under_cursor);
+  end
 end
 
-vim.g.mapleader = ' ' -- maybe require init.vim so I don't have to write this twice?
-vim.keymap.set('n', '<Leader>tb', function() toggleBool() end, {buffer = true})
+local toggleBools = vim.api.nvim_create_augroup("toggleBools", {clear = true})
+vim.api.nvim_create_autocmd(
+{"Filetype"},
+{pattern = "*",
+callback = function()
+  vim.keymap.set('n', '<Leader>tb', function() toggleBool() end, {buffer = true})
+end,
+group = toggleBools}
+)
+
+--vim.g.mapleader = ' ' -- maybe require init.vim so I don't have to write this twice?
 
 ------------------------------------------------------------
 
