@@ -170,6 +170,19 @@ vim.api.nvim_create_autocmd("BufEnter", {command = [[set formatoptions-=cro]]})
 
 ------------------------------------------------------------
 
+-- Add header to shell script on new file
+
+------------------------------------------------------------
+
+vim.api.nvim_create_autocmd("BufNewFile",
+{
+  pattern = "*.sh",
+  command = [[:exe "norm i#!/usr/bin/bash\<Esc>o\<CR>\<Esc>"]]
+})
+
+
+------------------------------------------------------------
+
 -- Setup lsp-zero
 
 ------------------------------------------------------------
