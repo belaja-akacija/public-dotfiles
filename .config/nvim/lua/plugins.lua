@@ -27,7 +27,7 @@ return require('packer').startup(function(use)
   use 'tpope/vim-fugitive'
   use 'tpope/vim-sexp-mappings-for-regular-people'
   use 'HiPhish/guile.vim'
-  use 'luochen1990/rainbow'
+  --use 'luochen1990/rainbow'
   use 'guns/vim-sexp'
   use 'jpalardy/vim-slime'
   use ({

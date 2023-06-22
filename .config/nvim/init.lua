@@ -191,9 +191,20 @@ keymap('n', 'yLl', '<Plug>YSsurround', { noremap = false, silent = false })
 keymap('n', 'yLL', '<Plug>YSSurround', { noremap = false, silent = false })
 keymap('x', 'L', '<Plug>VSurround', { noremap = false, silent = false })
 keymap('x', 'gL', '<Plug>VgSurround', { noremap = false, silent = false })
+
+-- Menu for spell check
+vim.cmd[[
+anoremenu SpellLang.off :setlocal nospell<CR>
+anoremenu SpellLang.EN :setlocal spell spelllang=en<CR>
+]]
+keymap('', '<F11>', ':popup SpellLang<CR>', {noremap = true})
+
 -- telescope
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+
+
+

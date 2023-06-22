@@ -4,6 +4,7 @@ static const Block blocks[] = {
   { "",      "playing.sh"                                                  , 1 , 0 },
   { "",      "uptime.sh"                                                   , 1 , 0 },
   { "Upd: ", "checkupdates | wc -l"                                        , 30, 0 },
+  {"", "~/Documents/scripts/statusbar/sb-internet.sh", 5, 4},
   { "",      "sensors | grep 'Package id 0:' | awk '{print substr($4,2)}'" , 20, 0 },
   {"Mem: ",  "free -h | awk '/^Mem/ { print $7\"/\"$2 }' | sed s/i//g"     , 10, 0 },
   {"Disk: ", "df -h /dev/sda3 | awk '/dev/ { print $4 }'"                  , 60, 0 },

@@ -180,6 +180,13 @@ vim.api.nvim_create_autocmd("BufNewFile",
   command = [[:exe "norm i#!/usr/bin/bash\<Esc>o\<CR>\<Esc>"]]
 })
 
+------------------------------------------------------------
+
+-- WIP: CD into .../nvim/doc directory and back to the original directory when done looking at the files
+
+------------------------------------------------------------
+
+-- //put stuff here// --
 
 ------------------------------------------------------------
 
