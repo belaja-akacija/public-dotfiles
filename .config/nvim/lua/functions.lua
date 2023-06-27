@@ -75,37 +75,44 @@ group = lyBindings}
 
 ------------------------------------------------------------
 
--- TODO figure out how to make file (language) specific
--- Maybe make a table that that has a bunch of languages and their associated syntax for true and false?
+local languages = {
+  -- add your own languages as needed
+  lisp = {"t", "nil"},
+  scheme = {"#t", "#f"},
+  lilypond = {"t", "f"}, -- lilypond doesn't treat '#' as part of the word. Cursor needs to be on either 't' or 'f' to correctly change the element
+  python = {"True", "False"},
+  sql = {"TRUE", "FALSE"},
+  vim = {"1", "0"},
+  generic = {"true", "false"}
+}
 
 local function toggleBool()
-
+  --[[ currently doesn't work with files that are not detected by filetype.vim for some reason.
+   thankfully, 99% of the time this will work. --]]
   local file_type = vim.filetype.match({filename = vim.fn.expand("%")})
   local under_cursor = vim.fn.expand("<cword>");
   local toggle;
+  local language;
   local replace_under_cursor = "normal! ciw";
   local highlight_under_cursor = "normal! \"9yiw"; -- yank into "9, so highlight.on_yank works
+  print(file_type);
 
-  if (file_type == "lisp") then
-    if (under_cursor == "t") then
-      toggle = "nil";
-    elseif (under_cursor == "nil") then
-      toggle = "t";
-    else
-      print("Nothing to toggle.");
-    end
-  elseif (file_type ~= "lisp") then
-    if (under_cursor == "true") then
-      toggle = "false";
-    elseif (under_cursor == "false") then
-      toggle = "true";
-    end
+  if (languages[file_type] ~= nil) then
+    language = languages[file_type]
   else
-    print("Nothing to toggle.");
+    language = languages["generic"];
+  end
+
+  if under_cursor == language[1] then
+    toggle = 2;
+  elseif under_cursor == language[2] then
+    toggle = 1;
+  else
+    print('Nothing to toggle.');
   end
 
   if (toggle ~= nil) then
-    vim.cmd(replace_under_cursor .. toggle);
+    vim.cmd(replace_under_cursor .. language[toggle]);
     vim.cmd(highlight_under_cursor);
   end
 end
@@ -115,12 +122,8 @@ vim.api.nvim_create_autocmd(
 {"Filetype"},
 {pattern = "*",
 callback = function()
-  vim.keymap.set('n', '<Leader>tb', function() toggleBool() end, {buffer = true})
-end,
-group = toggleBools}
-)
-
---vim.g.mapleader = ' ' -- maybe require init.vim so I don't have to write this twice?
+  vim.keymap.set('n', '<Leader>tb', function() toggleBool() end, {buffer = true}) end,
+group = toggleBools})
 
 ------------------------------------------------------------
 
@@ -128,14 +131,14 @@ group = toggleBools}
 
 ------------------------------------------------------------
 
-vim.api.nvim_create_autocmd({'BufRead','BufNewFile'},
-{pattern = {"*.scm"},
-command = [[set ft=scheme.guile]]})
+--vim.api.nvim_create_autocmd({'BufRead','BufNewFile'},
+--{pattern = {"*.scm"},
+--command = [[set ft=scheme.guile]]})
 
-vim.api.nvim_create_autocmd({'BufRead', 'BufNewFile'},
-{pattern = {"*.scm"},
-command = [[RainbowToggleOn]],
-})
+--vim.api.nvim_create_autocmd({'BufRead', 'BufNewFile'},
+--{pattern = {"*.scm"},
+--command = [[RainbowToggleOn]],
+--})
 
 ------------------------------------------------------------
 
