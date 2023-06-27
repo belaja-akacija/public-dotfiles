@@ -94,7 +94,7 @@ local function toggleBool()
   local toggle;
   local language;
   local replace_under_cursor = "normal! ciw";
-  local highlight_under_cursor = "normal! \"9yiw"; -- yank into "9, so highlight.on_yank works
+  local highlight_under_cursor = "normal! \"9yiwe"; -- yank into "9, so highlight.on_yank works
   print(file_type);
 
   if (languages[file_type] ~= nil) then
