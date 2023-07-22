@@ -5,6 +5,7 @@
 ------------------------------------------------------------
 
 local set = vim.opt
+
 set.wrap = true
 set.exrc = true
 set.secure = true
