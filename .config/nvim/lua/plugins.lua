@@ -30,6 +30,16 @@ return require('packer').startup(function(use)
   --use 'luochen1990/rainbow'
   use 'guns/vim-sexp'
   use 'jpalardy/vim-slime'
+  -- literate programming in vim
+  use 'zyedidia/literate.vim'
+  -- treesitter
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = function()
+      local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+      ts_update()
+    end,
+  }
   use ({
     'vlime/vlime',
     rtp = 'vim/'
@@ -64,6 +74,15 @@ use {
   -- or                            , branch = '0.1.x',
   requires = { {'nvim-lua/plenary.nvim'} }
 }
+-- harpoon, to quickly move between files
+use {'ThePrimeagen/harpoon'}
 -- gruvbox colorscheme
-use {'morhetz/gruvbox', config = function() vim.cmd.colorscheme("gruvbox") end }
+use {'morhetz/gruvbox'}
+use {'sainnhe/gruvbox-material'}
+use {'rafi/awesome-vim-colorschemes'}
+--use {'lmburns/kimbox'}
+
+-- conjure (conversational software development)
+--use {'Olical/conjure'}
+--use {'Olical/aniseed'}
 end)
