@@ -1,4 +1,4 @@
-------------------------------------------------------------
+-----------------------------------------------------------
 
 -- FUNCTIONS
 
@@ -94,6 +94,7 @@ local function toggleBool()
   local toggle;
   local language;
   local replace_under_cursor = "normal! ciw";
+  -- TODO add a little case if the word is only one letter, don't move the cursor
   local highlight_under_cursor = "normal! \"9yiwe"; -- yank into "9, so highlight.on_yank works
   print(file_type);
 
@@ -139,6 +140,22 @@ group = toggleBools})
 --{pattern = {"*.scm"},
 --command = [[RainbowToggleOn]],
 --})
+
+
+------------------------------------------------------------
+
+-- Go to end of a double paren form in lisp. e.g: (let ((var "value")))
+
+------------------------------------------------------------
+
+local lispForms = vim.api.nvim_create_augroup("lispForms", {clear = true});
+
+vim.api.nvim_create_autocmd(
+{"Filetype"},
+{pattern = "lisp",
+callback = function()
+  vim.keymap.set('n', '<leader>ll', function() vim.cmd("normal! f);") end, {buffer = true}) end,
+group = lispForms})
 
 ------------------------------------------------------------
 
