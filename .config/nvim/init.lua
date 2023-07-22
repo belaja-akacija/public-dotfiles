@@ -22,10 +22,11 @@
 --[[
 to go to the 'required' files, use <Leader>] on the file name
 --]]
+require ('options')
 require ('plugins')
+require ('after')
 require ('functions')
 require ('aesthetics')
-require ('options')
 
 local keymap = vim.api.nvim_set_keymap
 
@@ -83,11 +84,12 @@ keymap('n', '<Leader>rv', ':so ~/.config/nvim/init.lua <CR>', { noremap = true, 
 keymap('n', '<Leader>vs', ':vsp<CR>', { noremap = true, silent = false })
 keymap('n', '<Leader>hs', ':sp<CR>', { noremap = true, silent = false })
 -- create terminal splits
-keymap('n', '<Leader>vt', ':vnew term://zsh<CR>a', { noremap = true, silent = true })
-keymap('n', '<Leader>ht', ':new term://zsh<CR>a', { noremap = true, silent = true })
+-- locally, turn off line numbers for the splits
+keymap('n', '<Leader>vt', ':vnew term://zsh<CR>:setlocal number!<CR>a', { noremap = true, silent = true })
+keymap('n', '<Leader>ht', ':new term://zsh<CR>:setlocal number!<CR>a', { noremap = true, silent = true })
 -- create guile scheme terminal splits
-keymap('n', '<Leader>g', ':vsp<CR>:GuileTerminal<CR>a', { noremap = true, silent = true })
-keymap('n', '<Leader>gl', ':vsp<CR>:GuileLyTerminal<CR>a', { noremap = true, silent = true }) -- TODO enable this only in lilypond files
+keymap('n', '<Leader>g', ':vsp<CR>:GuileTerminal<CR>:setlocal number!<CR>a', { noremap = true, silent = true })
+keymap('n', '<Leader>gl', ':vsp<CR>:GuileLyTerminal<CR>:setlocal number!<CR>a', { noremap = true, silent = true }) -- TODO enable this only in lilypond files
 -- Escape out of terminal
 keymap('t', '<Esc><Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
 -- resizing splits
@@ -150,7 +152,7 @@ keymap('n', '<Leader>k', ':bprev<CR>', { noremap = true, silent = false })
 -- Toggles
 
 ------------------------------------------------------------
-keymap('n', '<C-n>', ':set relativenumber!<CR>', { noremap = true, silent = true })
+--keymap('n', '<C-n>', ':set relativenumber!<CR>', { noremap = true, silent = true })
 
 ------------------------------------------------------------
 
@@ -205,6 +207,3 @@ vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
-
-
-
