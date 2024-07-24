@@ -112,6 +112,7 @@ keymap('', '<Leader>hw', '<C-w>t<C-w>K', { noremap = false, silent = true })
 keymap('', '<Leader>m', '<C-w>_<C-w><Bar>', { noremap = false, silent = true })
 keymap('', '<Leader>t', '<C-w>=', { noremap = false, silent = true })
 
+
 ------------------------------------------------------------
 
 -- Arrow key functions
@@ -146,6 +147,8 @@ keymap('', '<Leader>[', '<C-t>', { noremap = true, silent = true })
 ------------------------------------------------------------
 keymap('n', '<Leader>j', ':bnext<CR>', { noremap = true, silent = false })
 keymap('n', '<Leader>k', ':bprev<CR>', { noremap = true, silent = false })
+keymap('n', '<Leader>b', ':buffers<CR>:buffer<Space>', { noremap = true, silent = false })
+keymap('n', '<Leader>`', ':buffers<CR>:bd<Space>', { noremap = true, silent = false })
 
 ------------------------------------------------------------
 
@@ -169,6 +172,12 @@ keymap('n', '<F10>', ':exe "normal cl\\<C-v>u2713"<ESC>', { noremap = true, sile
 keymap('n', '<Leader>s', ':let @/ = ""<CR>', { noremap = true, silent = true })
 -- copy to system clipboard in visual mode
 keymap('x', '<C-c>', '"+y', { noremap = false, silent = false })
+
+-- Easier surroundings
+keymap('x', 'tb', 'Lb', { noremap = false, silent = false })
+keymap('x', 'tB', 'LB', { noremap = false, silent = false })
+keymap('n', '<Leader>tb', 'ys%b', { noremap = false, silent = false })
+keymap('n', '<Leader>tB', 'ys%B', { noremap = false, silent = false })
 
 ------------------------------------------------------------
 

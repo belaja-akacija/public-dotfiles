@@ -123,7 +123,7 @@ vim.api.nvim_create_autocmd(
 {"Filetype"},
 {pattern = "*",
 callback = function()
-  vim.keymap.set('n', '<Leader>tb', function() toggleBool() end, {buffer = true}) end,
+  vim.keymap.set('n', '<Leader>tp', function() toggleBool() end, {buffer = true}) end,
 group = toggleBools})
 
 ------------------------------------------------------------
@@ -187,6 +187,19 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 ------------------------------------------------------------
 
 vim.api.nvim_create_autocmd("BufEnter", {command = [[set formatoptions-=cro]]})
+
+------------------------------------------------------------
+
+-- Language specific layouts
+
+------------------------------------------------------------
+
+-- vim.api.nvim_create_autocmd("Filetype",
+-- {pattern = "python",
+-- command = [[
+-- :vsp
+-- :sp
+-- ]]})
 
 ------------------------------------------------------------
 

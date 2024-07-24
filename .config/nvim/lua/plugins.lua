@@ -80,6 +80,12 @@ use {'ThePrimeagen/harpoon'}
 use {'morhetz/gruvbox'}
 use {'sainnhe/gruvbox-material'}
 use {'rafi/awesome-vim-colorschemes'}
+
+-- firenvim (nvim in browser)
+use {
+    'glacambre/firenvim',
+    run = function() vim.fn['firenvim#install'](0) end
+}
 --use {'lmburns/kimbox'}
 
 -- conjure (conversational software development)

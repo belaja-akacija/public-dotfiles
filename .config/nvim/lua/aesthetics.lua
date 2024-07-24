@@ -33,12 +33,12 @@ vim.g['gruvbox_contrast_light'] = 'hard';
 
 -- Change background colors depending on time of day.
 local hr = tonumber(os.date('%H', os.time()))
-if hr > 8 and hr < 22 then
+if hr > 8 and hr < 17 then
   vim.cmd.colorscheme('gruvbox-material');
   vim.opt.background = 'light'
     vim.g['airline_theme'] = 'qwq';
 else
-  vim.cmd.colorscheme('gruvbox');
+  vim.cmd.colorscheme('gruvbox-material');
   vim.opt.background = 'dark'
   vim.g['airline_theme'] = 'base16_chalk';
 end
