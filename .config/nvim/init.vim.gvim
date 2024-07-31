@@ -1,0 +1,200 @@
+" Vim's default behavior
+if &compatible
+  set nocompatible
+endif
+
+" Use the internal diff if available.
+" Otherwise use the special 'diffexpr' for Windows.
+if &diffopt !~# 'internal'
+  set diffexpr=MyDiff()
+endif
+function MyDiff()
+  let opt = '-a --binary '
+  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+  let arg1 = v:fname_in
+  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+  let arg1 = substitute(arg1, '!', '\!', 'g')
+  let arg2 = v:fname_new
+  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+  let arg2 = substitute(arg2, '!', '\!', 'g')
+  let arg3 = v:fname_out
+  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+  let arg3 = substitute(arg3, '!', '\!', 'g')
+  if $VIMRUNTIME =~ ' '
+    if &sh =~ '\<cmd'
+      if empty(&shellxquote)
+        let l:shxq_sav = ''
+        set shellxquote&
+      endif
+      let cmd = '"' . $VIMRUNTIME . '\diff"'
+    else
+      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+    endif
+  else
+    let cmd = $VIMRUNTIME . '\diff'
+  endif
+  let cmd = substitute(cmd, '!', '\!', 'g')
+  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
+  if exists('l:shxq_sav')
+    let &shellxquote=l:shxq_sav
+  endif
+endfunction
+
+ "BEHAVIOUR
+set nocompatible
+set wrap
+set exrc
+set secure
+set linebreak
+set mouse=a
+set expandtab
+set tabstop=4
+set shiftwidth=2
+set ignorecase
+set infercase
+set smartcase
+set splitbelow splitright
+set hlsearch
+set incsearch
+filetype plugin on
+filetype indent on
+syntax on
+set numberwidth=1
+set cpoptions+=n
+set nu
+noremap Q <Nop>
+set showbreak=>\ \ \
+autocmd BufWritePre * :%s/\v\s+$//e
+" MAPPINGS
+nnoremap ; :
+nnoremap : ;
+let mapleader = "\<Space>"
+let maplocalleader = ",,"
+nnoremap <Leader>w :w<CR>
+nmap <Leader><Leader> V
+nnoremap <Leader>vs :vsp<CR>
+nnoremap <Leader>hs :sp<CR>
+nmap <Leader>' <C-W>W
+nnoremap <Leader>b :buffers<Space><CR>:buffer<Space>
+nnoremap <Leader>` :buffers<CR>:bd<Space>
+nnoremap <Leader>rv :so ~/.config/nvim/init.vim <CR>
+nnoremap <Leader>s :let @/ = ""<CR>
+nnoremap <C-e> :vsp $MYVIMRC <CR><C-w>R
+nnoremap <C-s> :%s/\v(
+nmap <Leader>cw <C-w>c
+nmap <Leader>sw <C-w>R
+nmap <C-j> <C-w>5-
+nmap <C-k> <C-w>5+
+nmap <C-h> <C-w>5<
+nmap <C-l> <C-w>5>
+map <Leader>m <C-w>_<C-w><Bar>
+map <Leader>t <C-w>=
+map <Leader>vw <C-w>t<C-w>H
+map <Leader>hw <C-w>t<C-w>K
+nmap <Leader><Leader>l  <C-W>l
+nmap <Leader><Leader>h <C-W>h
+nmap <Leader><Leader>k <C-W>k
+nmap <Leader><Leader>j <C-W>j
+vnoremap <C-y> "+y
+"nnoremap <Leader>vt :vnew term://zsh<CR>
+"nnoremap <Leader>ht :new term://zsh<CR>
+" open terminal splits
+nnoremap <Leader>vt :vert ter<CR>
+nnoremap <Leader>ht :term<CR>
+tnoremap <Esc><Esc> <C-\><C-n>
+
+" Easier jumps
+noremap <Leader>o <C-o>
+noremap <Leader>i <C-i>
+
+
+nmap <Leader>] <C-]>
+nmap <Leader>[ <C-t>
+" COLORS
+set termguicolors
+"colorscheme evening
+"colorscheme gruvbox-material
+
+set background=dark
+" set colorscheme only after everything has been sourced
+au VimEnter * colorscheme gruvbox-material
+"colorscheme monokai_pro
+set guifont=Lucida_Sans_Typewriter:h11:cANSI:qDRAFT
+
+"highlight LineNr guifg=#EDD2E0
+set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
+let &t_EI = "\<esc>[ q"
+let &t_SI = "\<esc>[5 q"
+let &t_SR = "\<esc>[3 q"
+nnoremap <Leader>s :let @/ = ""<CR>
+nnoremap <Leader>j :bnext<CR>
+nnoremap <Leader>k :bprevious<CR>
+nnoremap <C-n> :set relativenumber!<CR>
+
+" GUI / Windows settings
+" toolbar
+set guioptions -=T
+" menubar
+set guioptions -=m
+" scrollbar
+set guioptions -=r
+
+" Disable annoying beeping
+" set noerrorbells
+" set vb t_vb=
+set belloff=all
+
+" make backspace work like usual
+set backspace=indent,eol,start
+
+" Misc useful bindings
+
+" replace character under cursor with ✓
+nnoremap <F10> :exe "normal cl\<C-v>u2713"<ESC>
+
+" Copy to system clipboard in visual mode
+xmap <C-c> "+y
+" Paste from system clipboard
+nmap <C-p> "+p
+
+"nnoremap gl g^hi<C-o>vg0k$d<SPACE><ESC>
+
+" Go to end of a double paren form
+nnoremap <Leader>ll :exe "normal! f);"<CR>
+
+" Quickly open file explorer
+nnoremap <Leader>f :Sexplore!<CR>
+
+" Set current working directory
+nnoremap <Leader>8 :cd %:p:h<CR>
+
+
+if exists('s:loaded_vimafter')
+silent doautocmd VimAfter VimEnter *
+  else
+let s:loaded_vimafter=1
+augroup VimAfter
+  autocmd!
+  autocmd VimEnter * source ~/vimfiles/after/vimrc.vim
+augroup end
+  endif
+
+let g:plug_shallow = 0
+call plug#begin()
+Plug 'Galicarnax/vim-regex-syntax'
+Plug 'Konfekt/vim-alias'
+Plug 'junegunn/goyo.vim',
+Plug 'junegunn/limelight.vim',
+Plug 'justinmk/vim-sneak'
+Plug 'morhetz/gruvbox',
+Plug 'phanviet/vim-monokai-pro'
+Plug 'psliwka/vim-smoothie'
+Plug 'sainnhe/gruvbox-material'
+Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-repeat',
+Plug 'tpope/vim-surround',
+Plug 'tpope/vim-fugitive',
+Plug 'vlime/vlime'
+Plug 'ctrlpvim/ctrlp.vim'
+call plug#end()
