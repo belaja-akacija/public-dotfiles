@@ -110,11 +110,10 @@ keymap('', '<Leader>vw', '<C-w>t<C-w>H', { noremap = false, silent = true })
 keymap('', '<Leader>hw', '<C-w>t<C-w>K', { noremap = false, silent = true })
 -- maximize/equalize splits
 --keymap('', '<Leader>m', '<Leader>st<C-w>_<C-w><Bar>', { noremap = false, silent = true })
---keymap('', '<Leader>t', ':RestoreSizes<CR>', { noremap = false, silent = true })
---keymap('', '<Leader>st', ':SaveSizes<CR>', { noremap = false, silent = true })
 vim.keymap.set('n', '<Leader>m',':SaveAndMaximize<CR>', { noremap = true, silent = true})
 vim.keymap.set('n', '<Leader>t', ':RestoreSizes<CR>', { noremap = false, silent = true })
-keymap('n', '<Leader>st', '<C-w>=', { noremap = false, silent = true }) -- equalize windows
+-- truly equalize windows
+keymap('n', '<Leader>st', '<C-w>=', { noremap = false, silent = true })
 
 
 
