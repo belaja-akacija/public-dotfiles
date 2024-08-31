@@ -14,14 +14,16 @@ require'nvim-treesitter.configs'.setup {
 vim.cmd[[
 let g:vlime_window_settings = {
   \ "arglist": {
-    \ "pos": "botright",
+    \ "pos": "topleft",
     \ "size": 1,
     \ "vertical": v:false
   \ },
   \ "repl": {
-    \ "size": 5
+    \ "pos": "aboveleft",
+    \ "size": winheight(".") / 5
   \ },
   \ "sldb": {
+    \ "pos": "aboveleft",
     \ "size": 5
 \ }
 \ }
@@ -54,3 +56,7 @@ lsp.setup()
 --}
 
 --require('lspconfig').millet.setup({})
+
+--vim.cmd([[
+     --let g:opamshare = substitute(system('opam var share'),'\n$','','''')
+     --execute "set rtp+=" . g:opamshare . "/merlin/vim"]]);

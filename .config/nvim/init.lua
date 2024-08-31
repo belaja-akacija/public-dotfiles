@@ -109,8 +109,13 @@ keymap('n', '<Leader>sw', '<C-w>R', { noremap = false, silent = false })
 keymap('', '<Leader>vw', '<C-w>t<C-w>H', { noremap = false, silent = true })
 keymap('', '<Leader>hw', '<C-w>t<C-w>K', { noremap = false, silent = true })
 -- maximize/equalize splits
-keymap('', '<Leader>m', '<C-w>_<C-w><Bar>', { noremap = false, silent = true })
-keymap('', '<Leader>t', '<C-w>=', { noremap = false, silent = true })
+--keymap('', '<Leader>m', '<Leader>st<C-w>_<C-w><Bar>', { noremap = false, silent = true })
+--keymap('', '<Leader>t', ':RestoreSizes<CR>', { noremap = false, silent = true })
+--keymap('', '<Leader>st', ':SaveSizes<CR>', { noremap = false, silent = true })
+vim.keymap.set('n', '<Leader>m',':SaveAndMaximize<CR>', { noremap = true, silent = true})
+vim.keymap.set('n', '<Leader>t', ':RestoreSizes<CR>', { noremap = false, silent = true })
+keymap('n', '<Leader>st', '<C-w>=', { noremap = false, silent = true }) -- equalize windows
+
 
 
 ------------------------------------------------------------
@@ -216,3 +221,14 @@ vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+
+-- lsp-zero
+
+local cmp = require 'cmp';
+
+cmp.setup({
+  mapping = {
+    ["<CR>"] = cmp.mapping.confirm({select = true, behavior = cmp.ConfirmBehavior.Insert}),
+  }
+})
+
