@@ -4,6 +4,8 @@
 
 ------------------------------------------------------------
 
+local vi = vim.api;
+
 ------------------------------------------------------------
 
 -- Trime whitespace on save
@@ -18,10 +20,20 @@ fun! TrimWhitespace()
 endfun
 ]]
 
-vim.api.nvim_create_autocmd({'BufWrite'}, {
+vi.nvim_create_autocmd({'BufWrite'}, {
   pattern = {"*"},
   command = ":call TrimWhitespace()"
 })
+
+------------------------------------------------------------
+
+-- Format Rust file on save -- * depends on `rustfmt`
+
+------------------------------------------------------------
+
+--vi.nvim_create_autocmd({'BufWrite'}, {pattern = {"*.rs"},
+--command = "silent! %!rustfmt"})
+
 
 ------------------------------------------------------------
 
@@ -58,8 +70,8 @@ end
 
 
 
-local lyBindings = vim.api.nvim_create_augroup("lybindings", {clear = true})
-vim.api.nvim_create_autocmd(
+local lyBindings = vi.nvim_create_augroup("lybindings", {clear = true})
+vi.nvim_create_autocmd(
 {"Filetype"},
 {pattern = "lilypond",
 callback = function()
@@ -118,8 +130,8 @@ local function toggleBool()
   end
 end
 
-local toggleBools = vim.api.nvim_create_augroup("toggleBools", {clear = true})
-vim.api.nvim_create_autocmd(
+local toggleBools = vi.nvim_create_augroup("toggleBools", {clear = true})
+vi.nvim_create_autocmd(
 {"Filetype"},
 {pattern = "*",
 callback = function()
@@ -132,11 +144,11 @@ group = toggleBools})
 
 ------------------------------------------------------------
 
---vim.api.nvim_create_autocmd({'BufRead','BufNewFile'},
+--vi.nvim_create_autocmd({'BufRead','BufNewFile'},
 --{pattern = {"*.scm"},
 --command = [[set ft=scheme.guile]]})
 
---vim.api.nvim_create_autocmd({'BufRead', 'BufNewFile'},
+--vi.nvim_create_autocmd({'BufRead', 'BufNewFile'},
 --{pattern = {"*.scm"},
 --command = [[RainbowToggleOn]],
 --})
@@ -148,9 +160,9 @@ group = toggleBools})
 
 ------------------------------------------------------------
 
-local lispForms = vim.api.nvim_create_augroup("lispForms", {clear = true});
+local lispForms = vi.nvim_create_augroup("lispForms", {clear = true});
 
-vim.api.nvim_create_autocmd(
+vi.nvim_create_autocmd(
 {"Filetype"},
 {pattern = "lisp",
 callback = function()
@@ -163,7 +175,7 @@ group = lispForms})
 
 ------------------------------------------------------------
 
-vim.api.nvim_create_autocmd(
+vi.nvim_create_autocmd(
 "BufReadPost",
 { command = [[if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif]] })
 
@@ -174,8 +186,8 @@ vim.api.nvim_create_autocmd(
 
 ------------------------------------------------------------
 
-local yankGrp = vim.api.nvim_create_augroup("YankHighlight", {clear = true})
-vim.api.nvim_create_autocmd("TextYankPost", {
+local yankGrp = vi.nvim_create_augroup("YankHighlight", {clear = true})
+vi.nvim_create_autocmd("TextYankPost", {
   command = "silent! lua vim.highlight.on_yank()",
   group = yankGrp,
 })
@@ -186,7 +198,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 ------------------------------------------------------------
 
-vim.api.nvim_create_autocmd("BufEnter", {command = [[set formatoptions-=cro]]})
+vi.nvim_create_autocmd("BufEnter", {command = [[set formatoptions-=cro]]})
 
 ------------------------------------------------------------
 
@@ -194,7 +206,7 @@ vim.api.nvim_create_autocmd("BufEnter", {command = [[set formatoptions-=cro]]})
 
 ------------------------------------------------------------
 
--- vim.api.nvim_create_autocmd("Filetype",
+-- vi.nvim_create_autocmd("Filetype",
 -- {pattern = "python",
 -- command = [[
 -- :vsp
@@ -207,7 +219,7 @@ vim.api.nvim_create_autocmd("BufEnter", {command = [[set formatoptions-=cro]]})
 
 ------------------------------------------------------------
 
-vim.api.nvim_create_autocmd("BufNewFile",
+vi.nvim_create_autocmd("BufNewFile",
 {
   pattern = "*.sh",
   command = [[:exe "norm i#!/usr/bin/bash\<Esc>o\<CR>\<Esc>"]]
@@ -227,44 +239,44 @@ vim.api.nvim_create_autocmd("BufNewFile",
 
 ------------------------------------------------------------
 
-local lsp = require('lsp-zero').preset({})
+--local lsp = require('lsp-zero').preset({})
 
-lsp.on_attach(function(client, bufnr)
-  lsp.default_keymaps({buffer = bufnr})
-end)
+--lsp.on_attach(function(client, bufnr)
+  --lsp.default_keymaps({buffer = bufnr})
+--end)
 
--- (Optional) Configure lua language server for neovim
-require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+---- (Optional) Configure lua language server for neovim
+--require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 
-lsp.setup()
+--lsp.setup()
 
--- ghost text for lsp
-require('cmp').setup({
-  float_bordre = 'rounded',
-  call_servers = 'local',
-  configure_diagnostics = true,
-  setup_servers_on_start = true,
-  set_lsp_keymaps = {
-    preserve_mappings = false,
-    omit = {},
-  },
-  experimental = {ghost_text = true,},
-  manage_nvim_cmp = {
-    set_sources = 'recommended',
-    --set_basic_mapping = false,
-    set_extra_mappings = true,
-    set_format = true,
-    documentation_window = true,
-  },
-})
+---- ghost text for lsp
+--require('cmp').setup({
+  --float_bordre = 'rounded',
+  --call_servers = 'local',
+  --configure_diagnostics = true,
+  --setup_servers_on_start = true,
+  --set_lsp_keymaps = {
+    --preserve_mappings = false,
+    --omit = {},
+  --},
+  --experimental = {ghost_text = true,},
+  --manage_nvim_cmp = {
+    --set_sources = 'recommended',
+    ----set_basic_mapping = false,
+    --set_extra_mappings = true,
+    --set_format = true,
+    --documentation_window = true,
+  --},
+--})
 
 ------------------------------------------------------------
 
 -- guile terminal stuff. Where should this go?
-vim.cmd[[
-command GuileTerminal terminal guile
-command GuileLyTerminal terminal lilypond scheme-sandbox
-]]
+--vim.cmd[[
+--command GuileTerminal terminal guile
+--command GuileLyTerminal terminal lilypond scheme-sandbox
+--]]
 
 
 ------------------------------------------------------------
@@ -278,10 +290,10 @@ _G.saved_window_state = {}
 -- Save the sizes and cursor positions of all splits
 local function save_window_state()
     _G.saved_window_state = {}
-    for _, win_id in ipairs(vim.api.nvim_list_wins()) do
-        local win_height = vim.api.nvim_win_get_height(win_id)
-        local win_width = vim.api.nvim_win_get_width(win_id)
-        local cursor_pos = vim.api.nvim_win_get_cursor(win_id)
+    for _, win_id in ipairs(vi.nvim_list_wins()) do
+        local win_height = vi.nvim_win_get_height(win_id)
+        local win_width = vi.nvim_win_get_width(win_id)
+        local cursor_pos = vi.nvim_win_get_cursor(win_id)
         table.insert(_G.saved_window_state, {
             height = win_height,
             width = win_width,
@@ -297,23 +309,23 @@ local function restore_window_state()
         return
     end
 
-    local windows = vim.api.nvim_list_wins()
+    local windows = vi.nvim_list_wins()
     for i, win_id in ipairs(windows) do
         if i > #_G.saved_window_state then
             break
         end
         local state = _G.saved_window_state[i]
-        vim.api.nvim_win_set_height(win_id, state.height)
-        vim.api.nvim_win_set_width(win_id, state.width)
-        vim.api.nvim_win_set_cursor(win_id, state.cursor)
+        vi.nvim_win_set_height(win_id, state.height)
+        vi.nvim_win_set_width(win_id, state.width)
+        vi.nvim_win_set_cursor(win_id, state.cursor)
     end
 end
 
 -- Maximize
 local function maximize_split()
-    local win_id = vim.api.nvim_get_current_win()
-    vim.api.nvim_win_set_height(win_id, vim.api.nvim_get_option('lines') - 2)
-    vim.api.nvim_win_set_width(win_id, vim.api.nvim_get_option('columns') - 2)
+    local win_id = vi.nvim_get_current_win()
+    vi.nvim_win_set_height(win_id, vi.nvim_get_option('lines') - 2)
+    vi.nvim_win_set_width(win_id, vi.nvim_get_option('columns') - 2)
 end
 
 local function save_and_maximize()
@@ -322,5 +334,5 @@ local function save_and_maximize()
 end
 
 -- User commands to manually call these functions in Ex mode
-vim.api.nvim_create_user_command('RestoreSizes', restore_window_state, {})
-vim.api.nvim_create_user_command('SaveAndMaximize', save_and_maximize, {})
+vi.nvim_create_user_command('RestoreSizes', restore_window_state, {})
+vi.nvim_create_user_command('SaveAndMaximize', save_and_maximize, {})

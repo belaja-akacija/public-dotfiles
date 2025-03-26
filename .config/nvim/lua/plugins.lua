@@ -31,7 +31,10 @@ return require('packer').startup(function(use)
   use 'guns/vim-sexp'
   use 'jpalardy/vim-slime'
   -- literate programming in vim
-  use 'zyedidia/literate.vim'
+  --use 'zyedidia/literate.vim'
+
+
+
   -- treesitter
   use {
     'nvim-treesitter/nvim-treesitter',
@@ -44,51 +47,55 @@ return require('packer').startup(function(use)
     'vlime/vlime',
     rtp = 'vim/'
   })
-  -- autocomplete
+
+  -- LSP --
+
+  --use 'simrat39/rust-tools.nvim';
+  use 'mrcjkb/rustaceanvim';
+  use 'mfussenegger/nvim-dap';
+  use 'neovim/nvim-lspconfig';
+  use 'williamboman/mason.nvim';
+  use 'williamboman/mason-lspconfig.nvim';
+  --use 'puremourning/vimspector';
+
+  -- Completion framework:
+  use 'hrsh7th/nvim-cmp'
+
+  -- LSP completion source:
+  use 'hrsh7th/cmp-nvim-lsp'
+
+  -- Useful completion sources:
+  use 'hrsh7th/cmp-nvim-lua'
+  use 'hrsh7th/cmp-nvim-lsp-signature-help'
+  use 'hrsh7th/cmp-vsnip'
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/vim-vsnip'
+  -- telescope
   use {
-    'VonHeikemen/lsp-zero.nvim',
-    branch = 'v2.x',
-    requires = {
-      -- LSP Support
-      {'neovim/nvim-lspconfig'},             -- Required
-      {                                      -- Optional
-      'williamboman/mason.nvim',
-      run = function()
-        pcall(vim.cmd, 'MasonUpdate')
-      end,
-    },
-    {'williamboman/mason-lspconfig.nvim'}, -- Optional
-    -- Autocompletion
-    {'hrsh7th/nvim-cmp'},     -- Required
-    {'hrsh7th/cmp-nvim-lsp'}, -- Required
-    {'L3MON4D3/LuaSnip'},     -- Required
-    {'hrsh7th/cmp-buffer'},
-    {'hrsh7th/cmp-path'},
-    {'hrsh7th/cmp-cmdline'},
-    {'hrsh7th/nvim-cmp'},
+    'nvim-telescope/telescope.nvim', tag = '0.1.8',
+    -- or                            , branch = '0.1.x',
+    requires = { {'nvim-lua/plenary.nvim'} }
   }
-}
--- telescope
-use {
-  'nvim-telescope/telescope.nvim', tag = '0.1.1',
-  -- or                            , branch = '0.1.x',
-  requires = { {'nvim-lua/plenary.nvim'} }
-}
--- harpoon, to quickly move between files
-use {'ThePrimeagen/harpoon'}
--- gruvbox colorscheme
-use {'morhetz/gruvbox'}
-use {'sainnhe/gruvbox-material'}
-use {'rafi/awesome-vim-colorschemes'}
+  use 'nvim-lua/plenary.nvim'
+  -- harpoon, to quickly move between files
+  use {'ThePrimeagen/harpoon'}
+  -- gruvbox colorscheme
+  use {'morhetz/gruvbox'}
+  use {'sainnhe/gruvbox-material'}
+  use {'rafi/awesome-vim-colorschemes'}
 
--- firenvim (nvim in browser)
-use {
-    'glacambre/firenvim',
-    run = function() vim.fn['firenvim#install'](0) end
-}
---use {'lmburns/kimbox'}
+  -- firenvim (nvim in browser)
+  --use {
+  --'glacambre/firenvim',
+  --run = function() vim.fn['firenvim#install'](0) end
+  --}
+  --use {'lmburns/kimbox'}
 
--- conjure (conversational software development)
---use {'Olical/conjure'}
---use {'Olical/aniseed'}
+  -- conjure (conversational software development)
+  --use {'Olical/conjure'}
+  --use {'Olical/aniseed'}
+
+use "folke/todo-comments.nvim";
 end)
+

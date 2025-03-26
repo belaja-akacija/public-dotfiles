@@ -216,18 +216,18 @@ keymap('', '<F11>', ':popup SpellLang<CR>', {noremap = true})
 
 -- telescope
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 
 -- lsp-zero
 
-local cmp = require 'cmp';
+--local cmp = require 'cmp';
 
-cmp.setup({
-  mapping = {
-    ["<CR>"] = cmp.mapping.confirm({select = true, behavior = cmp.ConfirmBehavior.Insert}),
-  }
-})
+--cmp.setup({
+  --mapping = {
+    --["<CR>"] = cmp.mapping.confirm({select = true, behavior = cmp.ConfirmBehavior.Insert}),
+  --}
+--})
 
